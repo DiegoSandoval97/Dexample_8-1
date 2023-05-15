@@ -13,7 +13,10 @@
 //=====[Declaration of private data types]=====================================
 
 //=====[Declaration and initialization of public global objects]===============
-
+//Pines usados como salidas del led RGB
+//PB4 en CN7 y CN12
+//PA0 en CN10 y CN11
+//PD12 en CN10 y CN12 
 DigitalOut RGBLed[] = {(PB_4), (PA_0), (PD_12)};
 
 Ticker tickerBrightControl;
@@ -43,8 +46,13 @@ static void tickerCallbackBrightControl( );
 
 void brightControlInit()
 {
-    tickerBrightControl.attach( tickerCallbackBrightControl, 
-                              ( (float) tickRateMSBrightControl) / 1000.0 );
+    /**
+    tickerBrightControl define un timmer.
+    attach define qué función llamará el Timmer cada vez que llegue al final (interrupcion)
+    */
+    //Se comenta ticker BrightControl para no usar Timer
+    /*tickerBrightControl.attach( tickerCallbackBrightControl, 
+                              ( (float) tickRateMSBrightControl) / 1000.0 );*/
 
     setPeriod( RGB_LED_RED, 0.01f );
     setPeriod( RGB_LED_GREEN, 0.01f );
@@ -66,6 +74,11 @@ void setDutyCycle( lightSystem_t light, float dutyCycle )
 static void setPeriod( lightSystem_t light, float period )
 {
     periodSFloat[light] = period;
+}
+//Implementación para hacer Publica a tickerCallbackBrightControl
+void callTickerCallbackBrightControl()
+{
+    tickerCallbackBrightControl();
 }
 
 static void tickerCallbackBrightControl( )

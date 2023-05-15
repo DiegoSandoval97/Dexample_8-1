@@ -33,9 +33,17 @@ void lightSystemUpdate()
 {
     dutyCycle = lightLevelControlRead();
 
+    /** Código original
     setDutyCycle( RGB_LED_RED, dutyCycle );
     setDutyCycle( RGB_LED_GREEN, dutyCycle );
     setDutyCycle( RGB_LED_BLUE, dutyCycle );
+    */ 
+    // Seteo del Duty cycle a mano
+    setDutyCycle( RGB_LED_RED, 0.5f );
+    setDutyCycle( RGB_LED_GREEN, 0.35f ); // reconoce sólo cambios discretos de 1ms, eso lo ve como 0.3f
+    setDutyCycle( RGB_LED_BLUE, 0.8f );
+
+    callTickerCallbackBrightControl(); //nueva función definida para hacer publica al callback
 
 }
 
